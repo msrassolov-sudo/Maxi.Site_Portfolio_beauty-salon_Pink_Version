@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxury Nail Studio</title>
+
+<style>
+:root{
+  --accent:#ff4f87;
+  --accent2:#ff6fa3;
+  --white08: rgba(255,255,255,0.08);
+  --white12: rgba(255,255,255,0.12);
+  --line: rgba(255,255,255,0.12);
+  --muted: rgba(255,255,255,0.82);
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family:Segoe UI, Arial, sans-serif;
+  color:#fff;
+  padding-top:72px;
+
+  background:
+    linear-gradient(rgba(20,0,20,0.65),rgba(20,0,20,0.65)),
+    url("image/fones.png") center/cover no-repeat fixed;
+}
+
+/* розовый glow по краям */
+body::before{
+  content:"";
+  position:fixed;
+  inset:-60px;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(800px 400px at 15% 15%, rgba(255,79,135,0.22), transparent 60%),
+    radial-gradient(700px 380px at 85% 30%, rgba(255,111,163,0.16), transparent 60%),
+    radial-gradient(900px 500px at 50% 100%, rgba(255,79,135,0.12), transparent 65%);
+  filter: blur(18px);
+  opacity:0.9;
+}
+
+.page{ position:relative; z-index:1; }
+
+/* ===== TOP BAR ===== */
+.topbar{
+  position:fixed;
+  top:0; left:0;
+  width:100%;
+  background:rgba(0,0,0,0.65);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  z-index:1000;
+}
+.topbar-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:10px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.mini-brand{
+  display:flex; align-items:center; gap:10px;
+}
+.mini-brand img{
+  height:38px;
+  filter: drop-shadow(0 0 14px rgba(255,79,135,0.35));
+  animation: neonPulse 2.8s ease-in-out infinite;
+}
+@keyframes neonPulse{
+  0%,100% { filter: drop-shadow(0 0 10px rgba(255,79,135,0.25)); opacity:0.95; }
+  50% { filter: drop-shadow(0 0 22px rgba(255,79,135,0.55)); opacity:1; }
+}
+.contact-buttons{ display:flex; gap:12px; flex-wrap:wrap; }
+.contact-btn{
+  padding:8px 16px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  text-decoration:none;
+  color:#fff;
+  font-weight:800;
+  font-size:13px;
+  transition:.25s;
+}
+.contact-btn:hover{
+  box-shadow:0 0 18px rgba(255,105,180,0.65);
+  transform: translateY(-2px);
+}
+
+/* ===== HERO BANNER CARD ===== */
+.hero-banner-wrap{
+  max-width:1200px;
+  margin:25px auto 0;
+  padding:0 20px;
+}
+.hero-banner-card{
+  background:rgba(255,255,255,0.02);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:28px;
+  padding:20px;
+  box-shadow:0 30px 70px rgba(0,0,0,0.6);
+  text-align:center;
+}
+.hero-banner-card img{
+  width:min(800px,100%);
+  filter:drop-shadow(0 18px 40px rgba(0,0,0,0.7));
+}
+
+/* ===== HEADLINE ===== */
+.headline{
+  max-width:1200px;
+  margin:auto;
+  padding:25px 20px 0;
+}
+.headline h1{ margin:0; font-size:30px; letter-spacing:.2px; }
+.headline p{
+  margin-top:10px;
+  color:var(--muted);
+  line-height:1.65;
+  max-width:980px;
+}
+
+/* ===== GRID ===== */
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:30px 20px 60px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:30px;
+}
+
+/* ===== HERO BLOCKS ===== */
+.hero-block{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(14px);
+  border-radius:24px;
+  overflow:hidden;
+
+  border:1px solid rgba(255,105,180,0.25);
+  box-shadow:
+    0 0 0 1px rgba(255,105,180,0.15),
+    0 0 25px rgba(255,105,180,0.35),
+    0 25px 60px rgba(0,0,0,0.45);
+
+  transition: transform .28s ease, box-shadow .35s ease, border-color .35s ease;
+  will-change: transform;
+  opacity:0;
+  transform: translateY(22px);
+}
+.hero-block.reveal{
+  opacity:1;
+  transform: translateY(0);
+  transition: opacity .7s ease, transform .7s ease, box-shadow .35s ease, border-color .35s ease;
+}
+.hero-block:hover{
+  box-shadow:
+    0 0 0 1px rgba(255,105,180,0.35),
+    0 0 40px rgba(255,105,180,0.6),
+    0 0 80px rgba(255,20,147,0.4),
+    0 35px 85px rgba(0,0,0,0.55);
+  border-color: rgba(255,105,180,0.40);
+}
+
+.hero-block img{ width:100%; display:block; }
+
+.block-content{ padding:18px; }
+.block-content h2{
+  margin:0;
+  font-size:20px;
+  line-height:1.25;
+}
+.price{
+  float:right;
+  font-weight:900;
+  color:#ffd1df;
+}
+
+/* "подробнее" — кнопка */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 18px;
+  background:linear-gradient(45deg,var(--accent),var(--accent2));
+  border:none;
+  border-radius:999px;
+  font-weight:900;
+  cursor:pointer;
+  margin-top:12px;
+  color:#fff;
+  box-shadow:0 0 20px rgba(255,105,180,0.45);
+  transition:.3s;
+}
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 35px rgba(255,105,180,0.8);
+}
+.btn .chev{
+  display:inline-block;
+  transition: transform .25s ease;
+  font-weight:900;
+}
+
+/* Описание (скрыто/открыто) */
+.extra{
+  max-height:0;
+  overflow:hidden;
+  opacity:0.0;
+  transform: translateY(-6px);
+  transition: max-height .45s ease, opacity .35s ease, transform .35s ease;
+  border-top: 1px dashed rgba(255,255,255,0.22);
+  margin-top:12px;
+}
+.extra-inner{
+  padding-top:12px;
+  color: rgba(255,255,255,0.86);
+  line-height:1.65;
+  font-size:14px;
+}
+
+/* При открытии увеличиваем ТОЛЬКО этот блок */
+.hero-block.open{
+  transform: scale(1.02);
+}
+.hero-block.open .extra{
+  max-height: 520px;
+  opacity:1;
+  transform: translateY(0);
+}
+.hero-block.open .btn .chev{
+  transform: rotate(180deg);
+}
+
+/* ===== FOOTER GLASS BOXES ===== */
+.footer-wrap{
+  max-width:1200px;
+  margin: 0 auto 40px;
+  padding: 0 20px 30px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:18px;
+}
+
+.glass-box{
+  background:rgba(255,255,255,0.06);
+  backdrop-filter: blur(16px);
+  border-radius:22px;
+  padding:18px 18px 16px;
+
+  border:1px solid rgba(255,105,180,0.26);
+  box-shadow:
+    0 0 0 1px rgba(255,105,180,0.12),
+    0 0 26px rgba(255,105,180,0.30),
+    0 18px 55px rgba(0,0,0,0.55);
+}
+
+.glass-title{
+  margin:0 0 10px;
+  font-size:16px;
+  font-weight:900;
+  color: rgba(255,255,255,0.95);
+}
+
+.glass-text{
+  margin:0;
+  color: rgba(255,255,255,0.82);
+  line-height:1.65;
+  font-size:14px;
+}
+
+.glass-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;
+}
+.glass-actions a{
+  text-decoration:none;
+  color:#fff;
+  font-weight:900;
+  font-size:13px;
+  padding:10px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.14);
+  transition:.25s;
+}
+.glass-actions a:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 0 22px rgba(255,105,180,0.65);
+  border-color: rgba(255,105,180,0.35);
+}
+
+/* ===== MOBILE ===== */
+@media(max-width: 980px){
+  body{ padding-top: 104px; }
+  .container{ grid-template-columns: 1fr; }
+  .footer-grid{ grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="mini-brand">
+      <img src="image/baner.png" alt="Beauty Studio">
+    </div>
+
+    <div class="contact-buttons">
+      <a class="contact-btn" href="tel:+380675554433">Позвонить</a>
+      <a class="contact-btn" href="viber://chat?number=%2B380675554433">Viber</a>
+      <a class="contact-btn" href="https://t.me/BeautyStudioUA" target="_blank" rel="noopener">Telegram</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero-banner-wrap">
+  <div class="hero-banner-card">
+    <img src="image/baner.png" alt="Princess Nails">
+  </div>
+</section>
+
+<section class="headline">
+  <h1>Luxury Nail Studio в Киеве</h1>
+  <p>
+    Премиальная эстетика, стерильность и идеальная носка. Деликатная обработка, ровное выравнивание,
+    безупречный блик и сервис “как в бутике”.
+  </p>
+</section>
+
+<main class="container">
+
+  <!-- 1 -->
+  <article class="hero-block">
+    <img src="image/corection.png" alt="Коррекция">
+    <div class="block-content">
+      <h2>Коррекция покрытия <span class="price">650 грн</span></h2>
+      <div class="desc">Корректируем форму, обновляем цвет, выравниваем архитектуру ногтя.</div>
+
+      <button class="btn" type="button">
+        Подробнее <span class="chev">▾</span>
+      </button>
+
+      <div class="extra">
+        <div class="extra-inner">
+          <b>Что входит:</b> обработка кутикулы (аппарат/комби), опил формы, коррекция материала,
+          выравнивание, покрытие база+цвет+топ, масло/крем.<br><br>
+          <b>Время:</b> 1.5–2 часа. <b>Дизайн:</b> по прайсу.
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="hero-block">
+    <img src="image/delited.png" alt="Снятие">
+    <div class="block-content">
+      <h2>Снятие покрытия <span class="price">200 грн</span></h2>
+      <div class="desc">Безопасное снятие геля с минимальной нагрузкой на ногтевую пластину.</div>
+
+      <button class="btn" type="button">
+        Подробнее <span class="chev">▾</span>
+      </button>
+
+      <div class="extra">
+        <div class="extra-inner">
+          <b>Что входит:</b> снятие (аппарат/состав), деликатная полировка, уход масло/крем.<br><br>
+          <b>Опция:</b> лечебное покрытие/укрепление +150 грн.
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="hero-block">
+    <img src="image/cat_eye.png" alt="Cat Eye">
+    <div class="block-content">
+      <h2>Cat Eye <span class="price">750 грн</span></h2>
+      <div class="desc">Глубокий магнитный эффект и стойкость до 3 недель.</div>
+
+      <button class="btn" type="button">
+        Подробнее <span class="chev">▾</span>
+      </button>
+
+      <div class="extra">
+        <div class="extra-inner">
+          <b>Что входит:</b> обработка кутикулы, выравнивание, база, Cat Eye, постановка блика, топ.<br><br>
+          <b>Опция:</b> двойной блик/градиент +100 грн.
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="hero-block">
+    <img src="image/sheelac.png" alt="Shellac">
+    <div class="block-content">
+      <h2>Shellac <span class="price">700 грн</span></h2>
+      <div class="desc">Идеально ровное покрытие с глянцевым финишем.</div>
+
+      <button class="btn" type="button">
+        Подробнее <span class="chev">▾</span>
+      </button>
+
+      <div class="extra">
+        <div class="extra-inner">
+          <b>Что входит:</b> форма, кутикула, подготовка, база, цвет (1–2 слоя), топ, уход.<br><br>
+          <b>Снятие чужого покрытия:</b> +100 грн.
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="hero-block">
+    <img src="image/design.png" alt="Дизайн">
+    <div class="block-content">
+      <h2>Дизайн ногтей <span class="price">від 100 грн</span></h2>
+      <div class="desc">Френч, втирка, фольга, рисунки и акценты — подберём стиль под тебя.</div>
+
+      <button class="btn" type="button">
+        Подробнее <span class="chev">▾</span>
+      </button>
+
+      <div class="extra">
+        <div class="extra-inner">
+          <b>Примеры цен:</b><br>
+          • 1 ноготь (втирка/фольга/слайдер) — 100 грн<br>
+          • Френч — +250 грн<br>
+          • Стразы — від 50 грн<br>
+          • Сложный рисунок — від 300 грн
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="hero-block">
+    <img src="image/pedicur.png" alt="Педикюр">
+    <div class="block-content">
+      <h2>Педикюр <span class="price">900 грн</span></h2>
+      <div class="desc">Уход за стопами и ногтями + комфорт и идеальная гладкость.</div>
+
+      <button class="btn" type="button">
+        Подробнее <span class="chev">▾</span>
+      </button>
+
+      <div class="extra">
+        <div class="extra-inner">
+          <b>Что входит:</b> обработка стоп, ногти, кутикула, уход.<br><br>
+          <b>Покрытие гель-лак:</b> +250 грн • <b>Лечебное:</b> +150 грн
+        </div>
+      </div>
+    </div>
+  </article>
+
+</main>
+
+<!-- ===== FOOTER: 3 стеклянных неоновых бокса ===== -->
+<section class="footer-wrap">
+  <div class="footer-grid">
+
+    <div class="glass-box">
+      <h3 class="glass-title">Запись / Контакты</h3>
+      <p class="glass-text">Быстрее всего отвечаем в мессенджерах. Запись подтверждаем в тот же день.</p>
+      <div class="glass-actions">
+        <a href="tel:+380675554433">📞 +38 (067) 555-44-33</a>
+        <a href="viber://chat?number=%2B380675554433">💬 Viber</a>
+        <a href="https://t.me/BeautyStudioUA" target="_blank" rel="noopener">✈️ Telegram</a>
+      </div>
+    </div>
+
+    <div class="glass-box">
+      <h3 class="glass-title">Адрес</h3>
+      <p class="glass-text"><b>Киев, улица Красоты 12</b></p>
+      <p class="glass-text" style="margin-top:10px;">Ориентир: центр, рядом с метро (условно).</p>
+      <div class="glass-actions">
+        <a href="#" onclick="alert('Тут можно будет поставить ссылку на Google Maps'); return false;">🗺️ Открыть карту</a>
+      </div>
+    </div>
+
+    <div class="glass-box">
+      <h3 class="glass-title">График</h3>
+      <p class="glass-text"><b>Пн–Сб:</b> 10:00–19:00</p>
+      <p class="glass-text"><b>Вс:</b> по записи</p>
+      <p class="glass-text" style="margin-top:10px;">Стерильно • одноразовые расходники • премиум материалы.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer style="text-align:center; padding:14px 20px; color:rgba(255,255,255,0.7);">
+  © Luxury Nail Studio — demo page
+</footer>
+
+</div>
+
+<script>
+  // Появление карточек при скролле
+  const cards = document.querySelectorAll('.hero-block');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('reveal');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(el=>obs.observe(el));
+
+  // "Подробнее": открываем/закрываем ТОЛЬКО ту карточку, где нажали
+  document.querySelectorAll('.hero-block .btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const card = btn.closest('.hero-block');
+      card.classList.toggle('open');
+    });
+  });
+</script>
+
+</body>
+</html>
